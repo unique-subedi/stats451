@@ -1,17 +1,16 @@
 data {
   int N;
   real ell[N];
+  real phi = 32.84;
 }
 
 
 parameters {
-  real<lower=0> phi;
   real<lower=0> sigma;
 }
 
 
 model {
-  phi ~ 32.84;
   sigma ~ inv_gamma(2.0, 10.0);
 
   ell ~ normal(phi, sigma);
