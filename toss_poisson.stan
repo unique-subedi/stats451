@@ -10,7 +10,7 @@ parameters {
 
 
  model {
-	lambda ~ gamma(1, 10);
+	lambda ~ gamma(25, 0.5);
 
 	toss ~ poisson(lambda); // poisson() specifies the model
 }
