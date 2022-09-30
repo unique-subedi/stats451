@@ -17,7 +17,7 @@ parameters {
 
  
 generated quantities {
-	int toss_ppc[N];
+	real toss_ppc[N];
 
 	for (i in 1:N) {
 	    toss_ppc[i] = poisson_rng(lambda); //poisson_generate samples from poisson
