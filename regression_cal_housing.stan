@@ -17,7 +17,7 @@ parameters {
 model {
    
   
-  beta ~ multi_normal(rep_array(0, p), 25*identity_matrix (int p))
+  beta ~ multi_normal(rep_array(0, p), 25*identity_matrix(p))
 
   for (n in 1:N) {
      y[n] ~ normal(beta_0 + x[n] * beta, sigma);
