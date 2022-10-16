@@ -32,7 +32,7 @@ model {
     
   }
   
-y ~ normal(alpha + x * beta, sigma)
+y ~ normal(alpha + x * beta, sigma);
 
 }
 
