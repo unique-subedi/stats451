@@ -21,6 +21,9 @@ parameters {
 
 
 
+
+
+
 model {
    
   for (i in 1:p){
@@ -29,11 +32,7 @@ model {
     
   }
   
-
-  for (n in 1:N) {
-  
-    y[n] ~ normal(alpha + x[n] * beta, sigma);  #likelihood
-  }
+y ~ normal(alpha + x * beta, sigma)
 
 }
 
