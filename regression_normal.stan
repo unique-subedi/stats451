@@ -16,7 +16,7 @@ parameters {
   
   vector[p] beta;  #coefficient of predictors
   
-  real<lower=0> sigma;  #standard deviation of error
+  real<lower=0> sigma;  #standard deviation of likelihood
 }
 
 
@@ -37,10 +37,4 @@ model {
 
 }
 
-generated quantities {
-  vector[N] y_hat;
 
-  for (n in 1:N) {
-    y_hat[n] = normal_rng(beta_0 + x[n] * beta, sigma);   #prediction of y using fitted values. we will later use this block to make prediction for new x as well
-  }
-}
