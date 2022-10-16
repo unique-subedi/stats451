@@ -21,6 +21,13 @@ parameters {
 
 
 
+transformed parameters {
+  vector[N] mu;
+  mu = alpha + x * beta;
+}
+
+
+
 
 
 
@@ -32,7 +39,7 @@ model {
     
   }
   
-y ~ normal(alpha + x * beta, sigma);
+y ~ normal(mu, sigma);
 
 }
 
