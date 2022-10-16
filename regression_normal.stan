@@ -12,7 +12,7 @@ data {
 
 parameters {
 
-  real beta_0; #intercept
+  real alpha; #intercept
   
   vector[p] beta;  #coefficient of predictors
   
@@ -32,7 +32,7 @@ model {
 
   for (n in 1:N) {
   
-    y[n] ~ normal(beta_0 + x[n] * beta, sigma);  #likelihood
+    y[n] ~ normal(alpha + x[n] * beta, sigma);  #likelihood
   }
 
 }
