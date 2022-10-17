@@ -11,7 +11,9 @@ functions {
 
 data {
   int N;
+  int N_ppc;
   real d[N];
+  real d_ppc[N_ppc];
   real ell[N];
 }
 
@@ -45,9 +47,9 @@ model {
 
 
 generated quantities {
-  real ell_ppc[N];
+  real ell_ppc[N_ppc];
 
-for (i in 1:N) {
-    ell_ppc[i] = normal_rng(mu(d[i], phi, gamma_), sigma);
+for (i in 1:N_ppc) {
+    ell_ppc[i] = normal_rng(mu(d_ppc[i], phi, gamma_), sigma);
   }
 }
