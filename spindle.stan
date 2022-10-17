@@ -42,3 +42,12 @@ model {
     ell[i] ~ normal(mu(d[i], phi, gamma_), sigma);
   }
 }
+
+
+generated quantities {
+  real ell_ppc[N];
+
+for (i in 1:N) {
+    ell_ppc[i] = normal_rng(mu(d[i], phi, gamma_), sigma);
+  }
+}
