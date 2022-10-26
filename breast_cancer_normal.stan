@@ -7,7 +7,7 @@
 
   matrix[N, p] x;  #matrix of predictors
   
-  int<lower=0, upper=1> y[N];  #vector of response
+  vector<lower=0, upper=1> y;  #vector of response
 }
 
 
