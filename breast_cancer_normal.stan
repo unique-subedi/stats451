@@ -5,7 +5,7 @@
   int<lower=0> p;   #number of predictors
  
 
-  vector[p] x[N];  #matrix of predictors
+  matrix[N,p] x;  #matrix of predictors
   
   int<lower=0, upper=1> y[N];  #vector of response
 }
@@ -19,13 +19,23 @@ parameters {
   
 }
 
+transformed parameters {
+  vector[N] mu;
+  mu = alpha + x * beta;
+}
+
+
 
 
 
 model {
+
+  beta ~ normal(0, 1/10.0);
+
+  for(i in 1:N){
+    y[i] ~ bernoulli_logit(mu[i]);
+  }
  
- beta ~ normal(1, 1/10);
  
- y ~ bernoulli_logit(alpha + x * beta);
 
 }
