@@ -5,9 +5,9 @@
   int<lower=0> p;   #number of predictors
  
 
-  vector[N, p] x;  #matrix of predictors
+  matrix[N, p] x;  #matrix of predictors
   
-  int<lower=0, upper=1> y[N];  #matrix of response
+  int<lower=0, upper=1> y[N];  #vector of response
 }
 
 
