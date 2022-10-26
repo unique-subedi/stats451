@@ -25,6 +25,6 @@ model {
  
  beta ~ normal(1, 1/10);
  
- y ~ bernoulli_logit(beta * x);
+ y ~ bernoulli_logit(x * beta);
 
 }
