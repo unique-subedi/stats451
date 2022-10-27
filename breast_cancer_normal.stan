@@ -30,7 +30,7 @@ transformed parameters {
 
 model {
 
-  beta ~ normal(0, 10);
+  beta ~ normal(0, 5);
 
   for(i in 1:N){
     y[i] ~ bernoulli_logit(mu[i]);
