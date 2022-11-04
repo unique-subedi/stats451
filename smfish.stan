@@ -31,6 +31,6 @@ generated quantities {
   real n_ppc[N];
 
 for (i in 1:N) {
-    n_ppc[i] = neg_binom_rng(alpha, beta_);
+    n_ppc[i] = neg_binomial_rng(alpha, beta_);
   }
 }
