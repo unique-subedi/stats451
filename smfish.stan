@@ -25,3 +25,12 @@ model {
   // Likelihood
   n ~ neg_binomial(alpha, beta_);
 }
+
+
+generated quantities {
+  real n_ppc[N];
+
+for (i in 1:N) {
+    n_ppc[i] = neg_binom_rng(alpha, beta_);
+  }
+}
