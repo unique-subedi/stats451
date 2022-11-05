@@ -18,7 +18,7 @@ transformed parameters {
  vector[N] variances;
  
  for(n in 1:N){
-  variances[n] = variances[id[n]]; 
+  variances[n] = sigma[id[n]]; 
  
  }
 
