@@ -35,3 +35,11 @@ model {
   //likelihood
   y ~ normal(mu,sigma);
 }
+
+generated quantities {
+  real y_ppc[N];
+
+for (i in 1:N) {
+    y_ppc[i] = normal_rng(mu, sigma);
+  }
+}
