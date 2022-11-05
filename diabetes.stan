@@ -7,22 +7,22 @@ data {
     vector[N] y; //the response variable
   }
 parameters {
-  vector[K] gamma; //population-level regression coefficients
+  vector[K] gamma_; //population-level regression coefficients
   vector<lower=0>[K] tau; //the standard deviation of the regression coefficients
   vector[K] beta_raw[J];
   real<lower=0> sigma; //standard deviation of the individual observations
 }
 transformed parameters {
-  vector[K] beta[J]; //matrix of group-level regression coefficients
+  vector[K] beta_[J]; //matrix of group-level regression coefficients
   //computing the group-level coefficient, based on non-centered parameterization based on section 22.6 STAN (v2.12) user's guide
   for(j in 1:J){
-    beta[j] = gamma + tau .* beta_raw[j];
+    beta_[j] = gamma_ + tau .* beta_raw[j];
   }
 }
 model {
   vector[N] mu; //linear predictor
   //priors
-  gamma ~ normal(0,5); //weakly informative priors on the regression coefficients
+  gamma_ ~ normal(0,5); //weakly informative priors on the regression coefficients
   tau ~ cauchy(0,2.5); //weakly informative priors, see section 6.9 in STAN user guide
   sigma ~ gamma(2,0.1); //weakly informative priors, see section 6.9 in STAN user guide
   for(j in 1:J){
