@@ -8,7 +8,7 @@ data {
   }
 parameters {
   real<lower=0> tau; //the standard deviation of the regression coefficients
-
+  vector[K] beta_;
   real<lower=0> sigma[J]; //standard deviation of the individual observations
 }
 
@@ -17,8 +17,8 @@ transformed parameters {
  
  vector[N] variances;
  
- for(i in 1:n){
-  variances[i] = variances[id[n]]; 
+ for(n in 1:N){
+  variances[n] = variances[id[n]]; 
  
  }
 
@@ -26,7 +26,7 @@ transformed parameters {
 }
 model {
  
-  beta ~ normal(0, 5);  
+  beta_ ~ normal(0, 5);  
   tau ~ normal(0,5); 
   for(j in 1:J){
    sigma[j] ~ normal(0, tau); 
@@ -35,13 +35,13 @@ model {
  
   //likelihood
 
-  y ~ normal(X* beta ,variances);
+  y ~ normal(X* beta_ ,variances);
 }
 
 generated quantities {
   real y_ppc[N];
 
 for (i in 1:N) {
-    y_ppc[i] = normal_rng(mu[i], variances[i]);
+    y_ppc[i] = normal_rng(X[i]* beta_, variances[i]);
   }
 }
