@@ -15,10 +15,10 @@ parameters {
 transformed parameters {
 
  
- vector[N] var;
+ vector[N] variances;
  
  for(i in 1:n){
-  var[i] = sigma[id[n]]; 
+  var[i] = variances[id[n]]; 
  
  }
 
@@ -35,13 +35,13 @@ model {
  
   //likelihood
 
-  y ~ normal(X* beta ,var);
+  y ~ normal(X* beta ,variances);
 }
 
 generated quantities {
   real y_ppc[N];
 
 for (i in 1:N) {
-    y_ppc[i] = normal_rng(mu[i], var[i]);
+    y_ppc[i] = normal_rng(mu[i], variances[i]);
   }
 }
