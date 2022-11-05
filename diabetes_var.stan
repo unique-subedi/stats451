@@ -18,7 +18,7 @@ transformed parameters {
  vector[N] variances;
  
  for(i in 1:n){
-  var[i] = variances[id[n]]; 
+  variances[i] = variances[id[n]]; 
  
  }
 
