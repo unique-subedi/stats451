@@ -18,9 +18,17 @@ transformed parameters {
   for(j in 1:J){
     beta_[j] = gamma_ + tau .* beta_raw[j];
   }
+ 
+  vector[N] mu;
+ 
+  for(n in 1:N){
+    mu[n] = X[n] * beta_[id[n]]; //compute the linear predictor using relevant group-level regression coefficients
+  }
+
+
 }
 model {
-  vector[N] mu; //linear predictor
+   //linear predictor
   //priors
   gamma_ ~ normal(0,5); //weakly informative priors on the regression coefficients
   tau ~ cauchy(0,2.5); //weakly informative priors, see section 6.9 in STAN user guide
@@ -29,9 +37,7 @@ model {
    beta_raw[j] ~ normal(0,1); //fill the matrix of group-level regression coefficients;
    //implies beta~normal(gamma,tau)
   }
-  for(n in 1:N){
-    mu[n] = X[n] * beta_[id[n]]; //compute the linear predictor using relevant group-level regression coefficients
-  }
+ 
   //likelihood
   y ~ normal(mu,sigma);
 }
@@ -40,6 +46,6 @@ generated quantities {
   real y_ppc[N];
 
 for (i in 1:N) {
-    y_ppc[i] = normal_rng(mu, sigma);
+    y_ppc[i] = normal_rng(mu[i], sigma);
   }
 }
