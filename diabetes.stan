@@ -30,7 +30,7 @@ model {
    //implies beta~normal(gamma,tau)
   }
   for(n in 1:N){
-    mu[n] = X[n] * beta[id[n]]; //compute the linear predictor using relevant group-level regression coefficients
+    mu[n] = X[n] * beta_[id[n]]; //compute the linear predictor using relevant group-level regression coefficients
   }
   //likelihood
   y ~ normal(mu,sigma);
