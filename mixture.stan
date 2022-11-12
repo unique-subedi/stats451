@@ -1,6 +1,6 @@
 data {
   int<lower=0> N; //sample size
-  int<lower=0> y[N]; //data
+  int<lower=0> n[N]; //data
   int<lower=0> K; //number of mixture components
 }
 
@@ -25,10 +25,10 @@ model {
   b ~ lognormal(4.6, 2.3);
 
   
-  for (n in 1:N) {
+  for (i in 1:N) {
     vector[K] lps = log_weight;
     for (k in 1:K) {
-      lps[k] += neg_binomial_lpmf(y[n] | alpha[k], beta_[k]);
+      lps[k] += neg_binomial_lpmf(n[i] | alpha[k], beta_[k]);
     }
     target += log_sum_exp(lps);
   }
