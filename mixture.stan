@@ -8,7 +8,7 @@ data {
 parameters {
   vector<lower=0>[K] alpha;
   vector<lower=0>[K] b;
-  simplex[K] weights;   // weights; its in simplex since it should sum upto 1
+  simplex[K] weight;   // weights; its in simplex since it should sum upto 1
 }
 
 
@@ -18,7 +18,7 @@ transformed parameters {
 
 
 model {
-  vector[K] log_weights = log(weights);
+  vector[K] log_weight = log(weight);
   
   // Priors
   alpha ~ lognormal(0.0, 2.3);
@@ -26,7 +26,7 @@ model {
 
   
   for (n in 1:N) {
-    vector[K] lps = log_weights;
+    vector[K] lps = log_weight;
     for (k in 1:K) {
       lps[k] += neg_binomial_lpmf(y[n] | alpha[k], beta_[k]);
     }
