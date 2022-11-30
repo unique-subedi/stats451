@@ -1,14 +1,17 @@
+
 functions {
-  real ell_theor(real d, real phi, real gamma_) {
-    real denom_ratio = (gamma_ * d / phi)^3;
-    return gamma_ * d / (1 + denom_ratio)^(1.0 / 3.0); 
+  real mu(real d, real phi, real gamma_) {
+    real denom = (1+ (gamma_ * d / phi)^3)^(1.0 / 3.0);
+    return gamma_ * d / denom; 
   }
 }
 
 
 data {
   int N;
+  int N_ppc;
   real d[N];
+  real d_ppc[N_ppc];
   real ell[N];
 }
 
@@ -20,10 +23,15 @@ parameters {
 }
 
 
+// since we specify prior on log10_phi, we need to define this chunk to transform log10_phi to phi and still use phi as parameter of the model
+
 transformed parameters {
   real phi = 10^log10_phi;
 }
 
+
+
+//our generative model
 
 model {
   log10_phi ~ normal(1.5, 0.75);
@@ -31,6 +39,15 @@ model {
   sigma ~ normal(0.0, 10.0);
 
   for (i in 1:N) {
-    ell[i] ~ normal(ell_theor(d[i], phi, gamma_), sigma);
+    ell[i] ~ normal(mu(d[i], phi, gamma_), sigma);
+  }
+}
+
+
+generated quantities {
+  real ell_ppc[N_ppc];
+
+for (i in 1:N_ppc) {
+    ell_ppc[i] = normal_rng(mu(d_ppc[i], phi, gamma_), sigma);
   }
 }
